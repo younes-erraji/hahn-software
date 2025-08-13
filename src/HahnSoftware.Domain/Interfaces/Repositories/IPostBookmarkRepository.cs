@@ -1,6 +1,6 @@
 ﻿using HahnSoftware.Domain.Entities;
 
-namespace HahnSoftware.Domain.Interfaces;
+namespace HahnSoftware.Domain.Interfaces.Repositories;
 
 public interface IPostBookmarkRepository : IEntityRepository<PostBookmark>
 {

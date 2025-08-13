@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 
 using HahnSoftware.Domain.Pagination;
-using HahnSoftware.Domain.Interfaces;
 using HahnSoftware.Domain.Entities.Primitives;
 using HahnSoftware.Infrastructure.Persistence.Pagination;
+using HahnSoftware.Domain.Interfaces.Repositories;
 
 namespace HahnSoftware.Infrastructure.Persistence.Repositories;
 

@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 using MediatR;
 
-using HahnSoftware.Application.Posts.Queries;
-using HahnSoftware.Domain.RESTful;
 using HahnSoftware.Application.Posts.DTO;
+using HahnSoftware.Application.Posts.Queries;
 using HahnSoftware.Application.Posts.Commands.CreatePost;
 using HahnSoftware.Application.Posts.Commands.UpdatePost;
+using HahnSoftware.Application.RESTful;
 
 namespace HahnSoftware.API.Controllers;
 
@@ -22,10 +21,10 @@ public class PostsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetPost(Guid id)
+    [HttpGet("{slug}")]
+    public async Task<IActionResult> GetPost(string slug)
     {
-        GetPostQuery query = new GetPostQuery(id);
+        GetPostQuery query = new GetPostQuery(slug);
         PostDetailDTO? result = await _mediator.Send(query);
         return Ok(result);
     }

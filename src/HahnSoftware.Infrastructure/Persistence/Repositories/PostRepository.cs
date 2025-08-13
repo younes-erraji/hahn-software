@@ -1,6 +1,5 @@
 ﻿using HahnSoftware.Domain.Entities;
-using HahnSoftware.Domain.Interfaces;
-
+using HahnSoftware.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace HahnSoftware.Infrastructure.Persistence.Repositories;

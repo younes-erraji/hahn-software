@@ -11,6 +11,11 @@ public sealed class ResponseImmutable
     {
         return $"The system does not recognize the specified record!";
     }
+    
+    public static string OperationSuccess(string operation)
+    {
+        return $"The {operation} completed successfully.";
+    }
 
     public static readonly string Error = "An unexpected error occurred. Please try again later.";
 }

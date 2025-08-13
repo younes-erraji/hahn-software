@@ -1,9 +1,9 @@
 ﻿using HahnSoftware.Domain.Entities;
-using HahnSoftware.Domain.Interfaces;
 using HahnSoftware.Application.Posts.DTO;
 
 using MediatR;
 using HahnSoftware.Application.Posts.Mappers;
+using HahnSoftware.Domain.Interfaces.Repositories;
 
 namespace HahnSoftware.Application.Posts.Queries;
 

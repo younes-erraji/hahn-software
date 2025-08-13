@@ -1,8 +1,8 @@
 ﻿using HahnSoftware.Domain.Entities;
-using HahnSoftware.Domain.Interfaces;
 using HahnSoftware.Application.RESTful;
 
 using MediatR;
+using HahnSoftware.Domain.Interfaces.Repositories;
 
 namespace HahnSoftware.Application.Posts.Commands.DeletePost;
 

@@ -3,7 +3,7 @@ using HahnSoftware.Domain.Pagination;
 
 using System.Linq.Expressions;
 
-namespace HahnSoftware.Domain.Interfaces;
+namespace HahnSoftware.Domain.Interfaces.Repositories;
 
 public interface IEntityRepository<T> where T : class, IEntity
 {

@@ -1,24 +1,28 @@
 ﻿using HahnSoftware.Domain.Entities;
-using HahnSoftware.Domain.Interfaces;
 using HahnSoftware.Application.RESTful;
 
 using MediatR;
+using HahnSoftware.Domain.Interfaces.Repositories;
+using HahnSoftware.Domain.Interfaces.Services;
 
 namespace HahnSoftware.Application.Posts.Commands.CreatePost;
 
 public class UnbookmarkPostCommandHandler : IRequestHandler<UnbookmarkPostCommand, Response>
 {
+    private readonly IUserService _userService;
     private readonly IPostRepository _postRepository;
 
-    public UnbookmarkPostCommandHandler(IPostRepository postRepository)
+    public UnbookmarkPostCommandHandler(IPostRepository postRepository, IUserService userService)
     {
+        _userService = userService;
         _postRepository = postRepository;
     }
 
     public async Task<Response> Handle(UnbookmarkPostCommand request, CancellationToken cancellationToken)
     {
+        Guid userId = _userService.GetUserIdentifier();
         Post post = await _postRepository.Get(request.Id);
-        post.Unbookmark(null);
+        post.Unbookmark(userId);
         await _postRepository.Update(post);
         await _postRepository.SaveChanges();
 

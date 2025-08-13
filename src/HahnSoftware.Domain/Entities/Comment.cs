@@ -50,14 +50,12 @@ public sealed class Comment : Entity
     {
         Content = content;
         UpdateDate = DateTimeOffset.Now;
-
         AddDomainEvent(new CommentUpdateEvent(Id, content));
     }
 
     public void Delete()
     {
         DeletionDate = DateTimeOffset.Now;
-
         AddDomainEvent(new CommentDeleteEvent(Id));
     }
 
@@ -68,24 +66,23 @@ public sealed class Comment : Entity
         AddDomainEvent(new CommentReplyEvent(PostId, reply.Id, content, userId, Id));
     }
 
-    public void React(Guid userId, ReactionType type)
+    public void ReactionCreate(Guid userId, ReactionType type)
     {
         if (_reactions.Any(x => x.UserId == userId))
             throw new InvalidOperationException("Post is already reacted by this user");
 
         CommentReaction reaction = new CommentReaction(Id, userId, type);
         _reactions.Add(reaction);
-        AddDomainEvent(new PostReactionCreateEvent(Id, reaction.UserId, reaction.Type));
+        AddDomainEvent(new CommentReactionCreateEvent(Id, reaction.UserId, reaction.Type));
     }
 
-    public void Unreact(Guid userId)
+    public void ReactionRemove(Guid userId)
     {
         CommentReaction? reaction = _reactions.FirstOrDefault(x => x.UserId == userId);
         if (reaction is not null)
         {
             _reactions.Remove(reaction);
-            AddDomainEvent(new PostReactionRemoveEvent(Id, userId));
+            AddDomainEvent(new CommentReactionDeleteEvent(Id, userId));
         }
     }
-
 }

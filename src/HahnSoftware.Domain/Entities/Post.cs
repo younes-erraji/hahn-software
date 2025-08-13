@@ -66,7 +66,6 @@ public sealed class Post : Entity
     public void Delete()
     {
         DeletionDate = DateTimeOffset.Now;
-
         AddDomainEvent(new PostDeleteEvent(Id));
     }
 
@@ -98,7 +97,7 @@ public sealed class Post : Entity
         }
     }
 
-    public void React(Guid userId, ReactionType type)
+    public void CreateReaction(Guid userId, ReactionType type)
     {
         if (_reactions.Any(x => x.UserId == userId))
             throw new InvalidOperationException("Post is already reacted by this user");
@@ -108,13 +107,13 @@ public sealed class Post : Entity
         AddDomainEvent(new PostReactionCreateEvent(Id, reaction.UserId, reaction.Type));
     }
     
-    public void Unreact(Guid userId)
+    public void DeleteReaction(Guid userId)
     {
         PostReaction? reaction = _reactions.FirstOrDefault(x => x.UserId == userId);
         if (reaction is not null)
         {
             _reactions.Remove(reaction);
-            AddDomainEvent(new PostReactionRemoveEvent(Id, userId));
+            AddDomainEvent(new PostReactionDeleteEvent(Id, userId));
         }
     }
 

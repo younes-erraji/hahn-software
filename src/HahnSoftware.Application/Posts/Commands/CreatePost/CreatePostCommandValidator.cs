@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
-
-using HahnSoftware.Domain.Interfaces;
+using HahnSoftware.Domain.Interfaces.Repositories;
 using HahnSoftware.Immutable;
 
 namespace HahnSoftware.Application.Posts.Commands.CreatePost;

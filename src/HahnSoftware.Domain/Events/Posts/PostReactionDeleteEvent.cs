@@ -1,11 +1,11 @@
 ﻿namespace HahnSoftware.Domain.Events.Posts;
 
-public class CommentReactionRemoveEvent : DomainEvent
+public class PostReactionDeleteEvent : DomainEvent
 {
     public Guid PostId { get; }
     public Guid UserId { get; }
 
-    public CommentReactionRemoveEvent(Guid postId, Guid userId)
+    public PostReactionDeleteEvent(Guid postId, Guid userId)
     {
         PostId = postId;
         UserId = userId;
