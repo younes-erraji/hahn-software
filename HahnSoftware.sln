@@ -15,9 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC86FA84-ADC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C0036268-FE43-4003-AA43-710B1372CA81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HahnSoftware.Application.UnitTest", "HahnSoftware.Application.UnitTest\HahnSoftware.Application.UnitTest.csproj", "{472863D5-A08E-4FA7-B09F-AD8ABB32F0A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HahnSoftware.Application.UnitTest", "tests\HahnSoftware.Application.UnitTest\HahnSoftware.Application.UnitTest.csproj", "{472863D5-A08E-4FA7-B09F-AD8ABB32F0A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HahnSoftware.Domain.UnitTest", "HahnSoftware.Domain.UnitTest\HahnSoftware.Domain.UnitTest.csproj", "{CDB86FB4-FB34-4413-B60A-F8499E13BB83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HahnSoftware.Domain.UnitTest", "tests\HahnSoftware.Domain.UnitTest\HahnSoftware.Domain.UnitTest.csproj", "{CDB86FB4-FB34-4413-B60A-F8499E13BB83}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DFEF8E75-2026-49EA-BE9F-E26A8930EA6A}"
 	ProjectSection(SolutionItems) = preProject
