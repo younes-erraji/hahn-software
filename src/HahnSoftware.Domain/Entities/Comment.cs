@@ -1,7 +1,7 @@
 ﻿using HahnSoftware.Domain.Entities.Primitives;
-using HahnSoftware.Domain.Enums;
 using HahnSoftware.Domain.Events.Comments;
 using HahnSoftware.Domain.Events.Posts;
+using HahnSoftware.Domain.Enums;
 
 namespace HahnSoftware.Domain.Entities;
 
@@ -12,6 +12,8 @@ public sealed class Comment : Entity
         Content = content;
         PostId = postId;
         UserId = userId;
+
+        AddDomainEvent(new CommentCreationEvent(PostId, Id, Content, UserId));
     }
     
     public Comment(string content, Guid postId, Guid userId, Guid commentId)
@@ -21,6 +23,8 @@ public sealed class Comment : Entity
         UserId = userId;
         ThreadCommentId = commentId;
         Repliable = false;
+
+        AddDomainEvent(new CommentReplyEvent(PostId, Id, Content, UserId, ThreadCommentId.Value));
     }
 
     public string Content { get; private set; }
@@ -32,6 +36,7 @@ public sealed class Comment : Entity
 
     public bool Repliable { get; private set; } = true;
     public Guid? ThreadCommentId { get; private set; }
+    public DateTimeOffset? UpdateDate { get; private set; }
 
     public Comment? ThreadComment { get; private set; }
 
@@ -40,6 +45,21 @@ public sealed class Comment : Entity
     
     private readonly List<Comment> _replies = new();
     public IReadOnlyCollection<Comment> Replies => _replies.AsReadOnly();
+
+    public void Update(string content)
+    {
+        Content = content;
+        UpdateDate = DateTimeOffset.Now;
+
+        AddDomainEvent(new CommentUpdateEvent(Id, content));
+    }
+
+    public void Delete()
+    {
+        DeletionDate = DateTimeOffset.Now;
+
+        AddDomainEvent(new CommentDeleteEvent(Id));
+    }
 
     public void Reply(string content, Guid userId)
     {

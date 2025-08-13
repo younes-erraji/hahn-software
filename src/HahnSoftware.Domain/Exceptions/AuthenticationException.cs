@@ -1,4 +1,4 @@
-﻿namespace AtoZ.Exceptions;
+﻿namespace HahnSoftware.Domain.Exceptions;
 
 public class AuthenticationException : Exception
 {

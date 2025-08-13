@@ -1,7 +1,6 @@
 ﻿using HahnSoftware.Domain.Enums;
-using HahnSoftware.Domain.Entities.Primitives;
-using HahnSoftware.Domain.Events.Comments;
 using HahnSoftware.Domain.Events.Posts;
+using HahnSoftware.Domain.Entities.Primitives;
 
 using System.Text.RegularExpressions;
 
@@ -69,13 +68,6 @@ public sealed class Post : Entity
         DeletionDate = DateTimeOffset.Now;
 
         AddDomainEvent(new PostDeleteEvent(Id));
-    }
-
-    public void Comment(string content, Guid userId)
-    {
-        Comment comment = new Comment(content, Id, userId);
-        _comments.Add(comment);
-        AddDomainEvent(new CommentCreationEvent(Id, comment.Id, comment.Content, comment.UserId));
     }
 
     public void ArchivePost()
