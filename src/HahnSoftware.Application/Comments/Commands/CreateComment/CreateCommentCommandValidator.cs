@@ -2,7 +2,7 @@
 using HahnSoftware.Domain.Interfaces.Repositories;
 using HahnSoftware.Immutable;
 
-namespace HahnSoftware.Application.Posts.Commands.CreatePost;
+namespace HahnSoftware.Application.Comments.Commands.CreateComment;
 
 public class CreateCommentCommandValidator : AbstractValidator<CreateCommentCommand>
 {

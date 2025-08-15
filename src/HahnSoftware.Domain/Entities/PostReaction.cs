@@ -5,13 +5,13 @@ namespace HahnSoftware.Domain.Entities;
 
 public sealed class PostReaction : Entity
 {
-    public ReactionType Type { get; set; }
+    public ReactionType Type { get; private set; }
 
-    public Guid UserId { get; set; }
-    public User User { get; set; }
+    public Guid UserId { get; private set; }
+    public User User { get; private set; }
 
-    public Guid PostId { get; set; }
-    public Post Post { get; set; }
+    public Guid PostId { get; private set; }
+    public Post Post { get; private set; }
 
     public PostReaction()
     {

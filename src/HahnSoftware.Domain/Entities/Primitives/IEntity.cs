@@ -4,5 +4,5 @@ public interface IEntity
 {
     Guid Id { get; }
     DateTimeOffset CreationDate { get; }
-    DateTimeOffset? DeletionDate { get; set; }
+    DateTimeOffset? DeletionDate { get; }
 }

@@ -8,4 +8,7 @@ public class CommentDetailDTO
     public DateTimeOffset? UpdateDate { get; set; }
     public DateTimeOffset CreationDate { get; set; }
     public IEnumerable<CommentReplyDTO> Replies { get; set; }
+
+    public long Likes { get; set; }
+    public long Dislikes { get; set; }
 }

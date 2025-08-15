@@ -5,7 +5,7 @@ using HahnSoftware.Application.RESTful;
 using MediatR;
 using HahnSoftware.Domain.Interfaces.Repositories;
 
-namespace HahnSoftware.Application.Posts.Commands.UpdatePost;
+namespace HahnSoftware.Application.Comments.Commands.UpdatePost;
 
 public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand, Response>
 {

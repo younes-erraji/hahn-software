@@ -1,5 +1,7 @@
 ﻿using HahnSoftware.Domain.Entities;
+using HahnSoftware.Domain.Exceptions;
 using HahnSoftware.Domain.Interfaces.Repositories;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace HahnSoftware.Infrastructure.Persistence.Repositories;
@@ -15,12 +17,12 @@ public sealed class PostRepository : EntityRepository<Post>, IPostRepository
         Post? post = await Query(p => p.Slug == slug)
             .Include(p => p.User)
             .Include(p => p.Reactions)
-            .Include(p => p.Attachments)
+            // .Include(p => p.Attachments)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (post is null)
         {
-            throw new ArgumentNullException(nameof(post));
+            throw new NotFoundException("Post");
         }
 
         return post;

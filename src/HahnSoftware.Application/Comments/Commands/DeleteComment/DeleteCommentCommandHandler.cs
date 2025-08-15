@@ -1,11 +1,11 @@
 ﻿using HahnSoftware.Domain.Entities;
 using HahnSoftware.Application.RESTful;
 using HahnSoftware.Domain.Interfaces.Repositories;
-
-using MediatR;
 using HahnSoftware.Domain.Interfaces.Services;
 
-namespace HahnSoftware.Application.Posts.Commands.DeletePost;
+using MediatR;
+
+namespace HahnSoftware.Application.Comments.Commands.DeletePost;
 
 public class DeleteCommentCommandHandler : IRequestHandler<DeleteCommentCommand, Response>
 {

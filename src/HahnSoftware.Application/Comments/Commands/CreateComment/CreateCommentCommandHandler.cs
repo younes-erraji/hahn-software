@@ -1,12 +1,12 @@
 ﻿using HahnSoftware.Domain.Entities;
 using HahnSoftware.Domain.Exceptions;
 using HahnSoftware.Application.RESTful;
-
-using MediatR;
 using HahnSoftware.Domain.Interfaces.Repositories;
 using HahnSoftware.Domain.Interfaces.Services;
 
-namespace HahnSoftware.Application.Posts.Commands.CreatePost;
+using MediatR;
+
+namespace HahnSoftware.Application.Comments.Commands.CreateComment;
 
 public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, Response>
 {

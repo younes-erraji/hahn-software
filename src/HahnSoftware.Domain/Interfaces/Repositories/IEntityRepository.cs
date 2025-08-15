@@ -22,6 +22,8 @@ public interface IEntityRepository<T> where T : class, IEntity
     Task Update(T entity, CancellationToken cancellationToken = default);
     Task Update(IEnumerable<T> entities, CancellationToken cancellationToken = default);
     Task Delete(Guid entityId, CancellationToken cancellationToken = default);
+    /*
     Task Delete(T entity, CancellationToken cancellationToken = default);
     Task Delete(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+    */
 }

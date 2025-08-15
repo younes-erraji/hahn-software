@@ -1,8 +1,9 @@
 ﻿using FluentValidation;
+
 using HahnSoftware.Domain.Interfaces.Repositories;
 using HahnSoftware.Immutable;
 
-namespace HahnSoftware.Application.Posts.Commands.DeletePost;
+namespace HahnSoftware.Application.Comments.Commands.DeletePost;
 
 public class DeleteCommentCommandValidator : AbstractValidator<DeleteCommentCommand>
 {

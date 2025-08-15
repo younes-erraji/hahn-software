@@ -1,6 +1,5 @@
 ﻿using HahnSoftware.Application.Comments.DTO;
 using HahnSoftware.Application.Extensions;
-using HahnSoftware.Application.Posts.DTO;
 using HahnSoftware.Domain.Entities;
 
 namespace HahnSoftware.Application.Comments.Mappers;
@@ -49,7 +48,9 @@ public static class CommentMapper
             User = comment.User?.FullName,
             CreationDate = comment.CreationDate,
             UpdateDate = comment.UpdateDate,
-            Replies = MapEntitiesToReplyDTOs(comment.Replies)
+            Replies = MapEntitiesToReplyDTOs(comment.Replies),
+            Likes = comment.Reactions.Where(x => x.Type == Domain.Enums.ReactionType.Like).LongCount(),
+            Dislikes = comment.Reactions.Where(x => x.Type == Domain.Enums.ReactionType.Dislike).LongCount(),
         };
     }
 

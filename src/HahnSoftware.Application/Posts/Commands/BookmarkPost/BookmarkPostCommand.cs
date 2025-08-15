@@ -6,5 +6,10 @@ namespace HahnSoftware.Application.Posts.Commands.CreatePost;
 
 public class BookmarkPostCommand : IRequest<Response>
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; private set; }
+
+    public BookmarkPostCommand(Guid id)
+    {
+        Id = id;
+    }
 }

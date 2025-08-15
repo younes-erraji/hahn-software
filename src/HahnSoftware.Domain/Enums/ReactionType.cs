@@ -1,7 +1,7 @@
 ﻿namespace HahnSoftware.Domain.Enums;
 
-public enum ReactionType
+public enum ReactionType : byte
 {
-    Like,
-    Dislike
+    Like = 1,
+    Dislike = 2
 }

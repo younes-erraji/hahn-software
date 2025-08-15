@@ -66,17 +66,17 @@ public sealed class Comment : Entity
         AddDomainEvent(new CommentReplyEvent(PostId, reply.Id, content, userId, Id));
     }
 
-    public void ReactionCreate(Guid userId, ReactionType type)
+    public void LikeDislike(Guid userId, ReactionType type)
     {
         if (_reactions.Any(x => x.UserId == userId))
-            throw new InvalidOperationException("Post is already reacted by this user");
+            throw new InvalidOperationException("Comment is already reacted by this user");
 
         CommentReaction reaction = new CommentReaction(Id, userId, type);
         _reactions.Add(reaction);
         AddDomainEvent(new CommentReactionCreateEvent(Id, reaction.UserId, reaction.Type));
     }
 
-    public void ReactionRemove(Guid userId)
+    public void DeleteReaction(Guid userId)
     {
         CommentReaction? reaction = _reactions.FirstOrDefault(x => x.UserId == userId);
         if (reaction is not null)

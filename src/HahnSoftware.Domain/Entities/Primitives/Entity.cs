@@ -7,7 +7,7 @@ public class Entity : IEntity
 {
     public Guid Id { get; } = Guid.CreateVersion7();
     public DateTimeOffset CreationDate { get; } = DateTimeOffset.Now;
-    public DateTimeOffset? DeletionDate { get; set; }
+    public DateTimeOffset? DeletionDate { get; protected set; }
 
     // Domain events
     private readonly List<DomainEvent> _domainEvents = new();

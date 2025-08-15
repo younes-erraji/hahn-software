@@ -1,7 +1,5 @@
 ﻿using HahnSoftware.Domain.Entities.Primitives;
 using HahnSoftware.Domain.Enums;
-using HahnSoftware.Domain.Events.Comments;
-using HahnSoftware.Domain.Events.Posts;
 
 namespace HahnSoftware.Domain.Entities;
 

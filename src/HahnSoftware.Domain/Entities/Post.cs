@@ -32,13 +32,6 @@ public sealed class Post : Entity
     private readonly List<PostAttachment> _attachments = new();
     public IReadOnlyCollection<PostAttachment> Attachments => _attachments.AsReadOnly();
 
-    /*
-    public ICollection<Comment> Comments { get; private set; } = new HashSet<Comment>();
-    public ICollection<PostReaction> Reactions { get; private set; } = new HashSet<PostReaction>();
-    public ICollection<PostBookmark> Bookmarks { get; private set; } = new HashSet<PostBookmark>();
-    public ICollection<PostAttachment> Attachments { get; private set; } = new HashSet<PostAttachment>();
-    */
-
     private Post() { }
 
     public Post(string title, string body, List<string> tags, Guid userId)
@@ -97,7 +90,7 @@ public sealed class Post : Entity
         }
     }
 
-    public void CreateReaction(Guid userId, ReactionType type)
+    public void LikeDislike(Guid userId, ReactionType type)
     {
         if (_reactions.Any(x => x.UserId == userId))
             throw new InvalidOperationException("Post is already reacted by this user");

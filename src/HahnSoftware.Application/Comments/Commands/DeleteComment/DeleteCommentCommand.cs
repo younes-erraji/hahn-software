@@ -2,9 +2,14 @@
 
 using MediatR;
 
-namespace HahnSoftware.Application.Posts.Commands.DeletePost;
+namespace HahnSoftware.Application.Comments.Commands.DeletePost;
 
 public class DeleteCommentCommand : IRequest<Response>
 {
-    public Guid CommentId { get; set; }
+    public Guid CommentId { get; private set; }
+
+    public DeleteCommentCommand(Guid commentId)
+    {
+        CommentId = commentId;
+    }
 }
