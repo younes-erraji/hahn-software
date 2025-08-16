@@ -5,10 +5,10 @@ using MediatR;
 
 namespace HahnSoftware.Application.Behaviours;
 
-public class ExceptionHandlerBehaviour<TRequest, IResponse> : IPipelineBehavior<TRequest, Response>
-    where TRequest : notnull
+public class ExceptionHandlerBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : notnull where TResponse : notnull, IResponse
 {
-    public async Task<Response> Handle(TRequest request, RequestHandlerDelegate<Response> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         try
         {
@@ -16,7 +16,7 @@ public class ExceptionHandlerBehaviour<TRequest, IResponse> : IPipelineBehavior<
         }
         catch (Exception ex)
         {
-            return TryHandleAsync(ex);
+            return (TResponse)(IResponse)TryHandleAsync(ex);
         }
     }
 
@@ -29,7 +29,11 @@ public class ExceptionHandlerBehaviour<TRequest, IResponse> : IPipelineBehavior<
             else
                 return Response.NotFound();
         }
-        
+        else if (exception is ValidationException validatinException)
+        {
+            return Response.Error(validatinException.Errors);
+        }
+
         return Response.Error(exception, "Something went wrong, Please try again!");
     }
 }

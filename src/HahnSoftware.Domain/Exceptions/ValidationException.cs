@@ -2,11 +2,10 @@
 
 public class ValidationException : Exception
 {
-    public ValidationException() : base()
+    public Dictionary<string, IEnumerable<string>> Errors { get; set; }
+
+    public ValidationException(Dictionary<string, IEnumerable<string>> errors) : base("Unable to process your request due to validation errors.")
     {
-    }
-    
-    public ValidationException(string message) : base(message)
-    {
+        Errors = errors;
     }
 }

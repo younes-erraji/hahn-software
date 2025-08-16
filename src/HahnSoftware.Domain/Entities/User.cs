@@ -22,9 +22,9 @@ public sealed class User : Entity
     public ICollection<Post> Posts { get; private set; } = new HashSet<Post>();
     public ICollection<Comment> Comments { get; private set; } = new HashSet<Comment>();
     public ICollection<PostBookmark> Bookmarks { get; private set; } = new HashSet<PostBookmark>();
-    public List<RefreshToken> RefreshTokens { get; private set; } = new List<RefreshToken>();
+    public ICollection<RefreshToken> RefreshTokens { get; private set; } = new HashSet<RefreshToken>();
 
-    private User() { }
+    public User() { }
 
     public User(string key, string firstName, string lastName, string mail, string password, string verificationToken, DateTimeOffset tokenExpiry)
     {

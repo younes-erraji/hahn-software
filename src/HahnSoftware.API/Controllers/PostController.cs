@@ -27,7 +27,7 @@ public class PostController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> GetPosts([FromQuery] PaginationParam pagination, [FromBody] PostFilterDTO filter)
     {
         GetPostsQuery query = new GetPostsQuery(filter.Search, pagination);
@@ -44,7 +44,7 @@ public class PostController : ControllerBase
     }
 
     [Authorize]
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] PostInputDTO postDto)
     {
         CreatePostCommand command = new CreatePostCommand(postDto.Title, postDto.Body, postDto.Tags);

@@ -25,6 +25,14 @@ using (IServiceScope scope = app.Services.CreateScope())
 
 app.UseStaticFiles();
 
+app.UseCors(x => x
+   // .AllowAnyOrigin()
+   .AllowAnyMethod()
+   .AllowAnyHeader()
+   .SetIsOriginAllowed(origin => true)
+   .AllowCredentials()
+);
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

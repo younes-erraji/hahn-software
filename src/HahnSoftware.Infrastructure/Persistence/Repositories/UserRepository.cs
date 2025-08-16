@@ -47,7 +47,7 @@ public class UserRepository : EntityRepository<User>, IUserRepository
 
     public async Task<User?> GetActiveRefreshTokenAsync(string refreshToken)
     {
-        return await Query(x => x.RefreshTokens.Any(z => z.Token == refreshToken && z.Active))
+        return await Query(x => x.RefreshTokens.Any(z => z.Token == refreshToken && z.RevokationDate == null && DateTimeOffset.Now <= z.ExpiresOn))
             .Include(x => x.RefreshTokens)
             .FirstOrDefaultAsync();
     }

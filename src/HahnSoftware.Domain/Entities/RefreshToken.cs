@@ -6,7 +6,7 @@ namespace HahnSoftware.Domain.Entities;
 
 public sealed class RefreshToken : Entity
 {
-    public string Token { get; private set; } = Guid.CreateVersion7().ToString();
+    public string Token { get; private set; } = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
     public DateTimeOffset ExpiresOn { get; private set; }
     public DateTimeOffset? RevokationDate { get; private set; }
     public string? ReplacementToken { get; private set; }
@@ -17,9 +17,11 @@ public sealed class RefreshToken : Entity
     public bool Active => RevokationDate == null && Expiration == false;
     public bool Expiration => DateTimeOffset.Now >= ExpiresOn;
 
-    public RefreshToken(string token, DateTimeOffset expiresOn)
+    public RefreshToken() { }
+
+    public RefreshToken(Guid userId, DateTimeOffset expiresOn)
     {
-        Token = token;
+        UserId = userId;
         ExpiresOn = expiresOn;
     }
 

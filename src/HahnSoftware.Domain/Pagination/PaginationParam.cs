@@ -2,7 +2,7 @@
 
 public class PaginationParam
 {
-    private const int MaxPageSize = 500;
+    private const int MaxPageSize = 10;
 
     private int _pageSize = 10;
     private int _pageNumber = 1;
@@ -11,7 +11,7 @@ public class PaginationParam
     {
         get { return _pageSize; }
 
-        set { _pageSize = value > MaxPageSize ? MaxPageSize : value; }
+        set { _pageSize = value > 0 && value < MaxPageSize ? value : MaxPageSize; }
     }
 
     public int PageNumber

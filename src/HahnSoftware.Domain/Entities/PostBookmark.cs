@@ -1,4 +1,5 @@
 ﻿using HahnSoftware.Domain.Entities.Primitives;
+using HahnSoftware.Domain.Events.Posts;
 
 namespace HahnSoftware.Domain.Entities;
 
@@ -15,5 +16,7 @@ public sealed class PostBookmark : Entity
     {
         PostId = postId;
         UserId = userId;
+
+        AddDomainEvent(new PostBookmarkEvent(PostId, UserId));
     }
 }

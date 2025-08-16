@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace HahnSoftware.Application.RESTful;
 
-public sealed class Response
+public sealed class Response : IResponse
 {
     public bool Status { get; set; }
 

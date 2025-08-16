@@ -5,7 +5,7 @@ namespace HahnSoftware.Domain.Interfaces.Services;
 public interface IAuthenticationService
 {
     string GenerateAccessToken(User user);
-    RefreshToken GenerateRefreshToken(bool RememberMe);
+    RefreshToken GenerateRefreshToken(Guid userId, bool RememberMe);
     string GenerateToken();
     string GetPassword(string key, string password);
 }

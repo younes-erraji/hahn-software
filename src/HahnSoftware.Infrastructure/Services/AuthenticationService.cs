@@ -47,9 +47,9 @@ public class AuthenticationService : IAuthenticationService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public RefreshToken GenerateRefreshToken(bool RememberMe)
+    public RefreshToken GenerateRefreshToken(Guid userId, bool RememberMe)
     {
-        return new RefreshToken(Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)), RememberMe ? DateTimeOffset.Now.AddMonths(6) : DateTimeOffset.Now.AddDays(7));
+        return new RefreshToken(userId, RememberMe ? DateTimeOffset.Now.AddMonths(6) : DateTimeOffset.Now.AddDays(7));
     }
 
     public string GenerateToken()
@@ -59,6 +59,7 @@ public class AuthenticationService : IAuthenticationService
 
     public string GetPassword(string key, string password)
     {
-        return $"#{key}#-#{password}#";
+        // return $"Yt4{key}-{password}Yt4";
+        return $"Yt4{password}Yt4";
     }
 }

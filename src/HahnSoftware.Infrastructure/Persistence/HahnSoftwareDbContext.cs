@@ -42,8 +42,8 @@ public class HahnSoftwareDbContext : DbContext
     {
         base.OnConfiguring(optionsBuilder);
 
-        // optionsBuilder.EnableSensitiveDataLogging();
-        optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
+        optionsBuilder.EnableSensitiveDataLogging();
+        // optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
 
         optionsBuilder.UseSqlServer(sqlOptions =>
         {

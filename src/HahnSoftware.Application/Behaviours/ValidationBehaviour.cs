@@ -2,13 +2,14 @@
 using FluentValidation.Results;
 
 using HahnSoftware.Application.RESTful;
+using HahnSoftware.Domain.Exceptions;
 
 using MediatR;
 
 namespace HahnSoftware.Application.Behaviours;
 
-public class ValidationBehaviour<TRequest, IResponse> : IPipelineBehavior<TRequest, Response>
-    where TRequest : notnull
+public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : notnull where TResponse : notnull, IResponse
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
@@ -17,7 +18,7 @@ public class ValidationBehaviour<TRequest, IResponse> : IPipelineBehavior<TReque
         _validators = validators;
     }
 
-    public async Task<Response> Handle(TRequest request, RequestHandlerDelegate<Response> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         if (_validators.Any())
         {
@@ -32,7 +33,16 @@ public class ValidationBehaviour<TRequest, IResponse> : IPipelineBehavior<TReque
                 .ToList();
 
             if (failures.Count != 0)
-                throw new ValidationException(failures);
+            {
+                Dictionary<string, IEnumerable<string>> errors = failures
+                    .GroupBy(e => e.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(e => e.ErrorMessage).AsEnumerable()
+                    );
+
+                throw new Domain.Exceptions.ValidationException(errors);
+            }
         }
 
         return await next();

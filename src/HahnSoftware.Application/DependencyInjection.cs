@@ -18,8 +18,8 @@ public static class DependencyInjection
 
         services.AddMediatR(config => {
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ExceptionHandlerBehaviour<,>));
+            config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         });
     }
 }

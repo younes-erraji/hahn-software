@@ -1,4 +1,5 @@
 ﻿using HahnSoftware.Application.Authentication.DTO;
+using HahnSoftware.Application.Authentication.Mappers;
 using HahnSoftware.Application.RESTful;
 using HahnSoftware.Domain.Entities;
 using HahnSoftware.Domain.Interfaces.Repositories;
@@ -11,12 +12,14 @@ namespace HahnSoftware.Application.Authentication.Commands.RefreshToken;
 public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, Response>
 {
     private readonly IUserRepository _userRepository;
+    private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly IAuthenticationService _authenticationService;
 
-    public RefreshTokenCommandHandler(IUserRepository userRepository, IAuthenticationService authenticationService)
+    public RefreshTokenCommandHandler(IUserRepository userRepository,  IAuthenticationService authenticationService, IRefreshTokenRepository refreshTokenRepository)
     {
         _userRepository = userRepository;
         _authenticationService = authenticationService;
+        _refreshTokenRepository = refreshTokenRepository;
     }
 
     public async Task<Response> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
@@ -28,12 +31,11 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, R
         Domain.Entities.RefreshToken? oldRefreshToken = user.RefreshTokens.First(x => x.Token == request.RefreshToken);
 
         string accessToken = _authenticationService.GenerateAccessToken(user);
-        Domain.Entities.RefreshToken refreshToken = _authenticationService.GenerateRefreshToken(false);
+        // Domain.Entities.RefreshToken refreshToken = _authenticationService.GenerateRefreshToken(user.Id, false);
+        // oldRefreshToken.ReplaceToken(refreshToken.Token);
 
-        oldRefreshToken.ReplaceToken(refreshToken.Token);
-
+        /*
         user.RefreshTokens.Add(refreshToken);
-
         List<Domain.Entities.RefreshToken> tokensToRemove = user.RefreshTokens
             .Where(x => x.Active == false && x.CreationDate.AddDays(2) <= DateTimeOffset.Now)
             .ToList();
@@ -42,13 +44,18 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, R
         {
             user.RefreshTokens.Remove(token);
         }
+        */
 
-        await _userRepository.SaveChanges();
+        await _refreshTokenRepository.Update(oldRefreshToken);
+        // await _refreshTokenRepository.Create(refreshToken);
+        await _refreshTokenRepository.SaveChanges();
 
-        return Response.Success(new TokenResponse
+        TokenResponse token = new()
         {
             AccessToken = accessToken,
-            RefreshToken = refreshToken.Token
-        });
+            RefreshToken = oldRefreshToken.Token
+        };
+
+        return Response.Success(UserMapper.MapEntityToDetailDTO(user, token));
     }
 }
