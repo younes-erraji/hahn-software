@@ -47,8 +47,6 @@ The API connects to the SQL Server container using the following connection stri
 Server=db;Database=HahnSoftwareDb;User=sa;Password=HahnSoftware@123;
 ```
 
-You can change the password in `docker-compose.yml` if needed.
-
 ## Notes
 
 - Ensure ports 5000 (API), 3000 (UI), and 1433 (SQL Server) are available on your machine.
