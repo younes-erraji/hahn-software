@@ -32,8 +32,19 @@ public sealed class Post : Entity
     private readonly List<PostAttachment> _attachments = new();
     public IReadOnlyCollection<PostAttachment> Attachments => _attachments.AsReadOnly();
 
-    private Post() { }
+    public Post() { }
 
+    public Post(Guid Id, string title, string body, List<string> tags, Guid userId)
+    {
+        Slug = GenerateSlug(title);
+        Title = title;
+        Body = body;
+        Tags = tags ?? new List<string>();
+        UserId = userId;
+
+        AddDomainEvent(new PostCreationEvent(Id, UserId, title));
+    }
+    
     public Post(string title, string body, List<string> tags, Guid userId)
     {
         Slug = GenerateSlug(title);
