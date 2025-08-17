@@ -49,4 +49,4 @@ Server=db;Database=HahnSoftwareDb;User=sa;Password=HahnSoftware@123;
 
 ## Notes
 
-- Ensure ports 5000 (API), 3000 (UI), and 1433 (SQL Server) are available on your machine.
+- Ensure ports 7276 (API), 3000 (UI), and 1433 (SQL Server) are available on your machine.
