@@ -1,5 +1,6 @@
 ﻿using HahnSoftware.Application.RESTful;
 using HahnSoftware.Domain.Entities;
+using HahnSoftware.Domain.Events.Users;
 using HahnSoftware.Domain.Interfaces.Repositories;
 using HahnSoftware.Domain.Interfaces.Services;
 
@@ -9,13 +10,15 @@ namespace HahnSoftware.Application.Authentication.Commands.ForgotPassword;
 
 public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand, Response>
 {
+    private readonly IMediator _mediator;
     private readonly IUserRepository _userRepository;
     private readonly IAuthenticationService _authenticationService;
 
-    public ForgotPasswordCommandHandler(IUserRepository userRepository, IAuthenticationService authenticationService)
+    public ForgotPasswordCommandHandler(IUserRepository userRepository, IAuthenticationService authenticationService, IMediator mediator)
     {
         _userRepository = userRepository;
         _authenticationService = authenticationService;
+        _mediator = mediator;
     }
 
     public async Task<Response> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
@@ -40,15 +43,7 @@ public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordComman
         await _userRepository.Update(user);
         await _userRepository.SaveChanges();
 
-        /*
-        string resetLink = $"{_resetPasswordUrl}?token={resetToken}&email={Uri.EscapeDataString(user.Mail)}";
-
-        await _mailProvider.SendAsync(
-            user.Mail,
-            "Reset Your Password",
-            $"Please reset your password by clicking on this link: <a href='{resetLink}'>Reset Password</a>. This link is valid for 1 hour."
-        );
-        */
+        await _mediator.Publish(new ForgotPasswordEvent(user.Id, user.Mail, resetToken));
 
         return Response.Success("If your email is registered, you will receive a password reset link.");
     }

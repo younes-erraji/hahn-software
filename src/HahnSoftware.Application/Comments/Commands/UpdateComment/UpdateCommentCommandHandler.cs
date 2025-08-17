@@ -1,5 +1,4 @@
 ﻿using HahnSoftware.Domain.Entities;
-using HahnSoftware.Domain.Exceptions;
 using HahnSoftware.Application.RESTful;
 
 using MediatR;

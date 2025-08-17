@@ -40,10 +40,11 @@ public class ChangePasswordCommandValidator : IRequestHandler<ChangePasswordComm
 
         foreach (Domain.Entities.RefreshToken token in user.RefreshTokens.Where(x => x.Active))
         {
-            token.Revoke("Password changed");
+            token.Revoke("Change Password");
         }
 
         await _refreshTokenRepository.Update(user.RefreshTokens);
+        await _userRepository.Update(user);
         await _userRepository.SaveChanges();
 
         return Response.Success("Password has been changed successfully");

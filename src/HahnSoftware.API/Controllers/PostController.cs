@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 using MediatR;
 
@@ -12,7 +13,7 @@ using HahnSoftware.Domain.Entities;
 using HahnSoftware.API.DTO.Posts;
 using HahnSoftware.Application.Posts.Queries.GetPost;
 using HahnSoftware.Application.Posts.Queries.GetPosts;
-using Microsoft.AspNetCore.Authorization;
+using HahnSoftware.Application.Posts.Queries.GetBookmarks;
 
 namespace HahnSoftware.API.Controllers;
 
@@ -31,6 +32,14 @@ public class PostController : ControllerBase
     public async Task<IActionResult> GetPosts([FromQuery] PaginationParam pagination, [FromBody] PostFilterDTO filter)
     {
         GetPostsQuery query = new GetPostsQuery(filter.Search, pagination);
+        PageableResponse<Post, PostListDTO> result = await _mediator.Send(query);
+        return Ok(result);
+    }
+    
+    [HttpPost("bookmarks")]
+    public async Task<IActionResult> GetBookmarks([FromQuery] PaginationParam pagination, [FromBody] PostFilterDTO filter)
+    {
+        GetBookmarksQuery query = new GetBookmarksQuery(filter.Search, pagination);
         PageableResponse<Post, PostListDTO> result = await _mediator.Send(query);
         return Ok(result);
     }

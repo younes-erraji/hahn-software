@@ -33,23 +33,17 @@ public abstract class EntityRepository<T> : IEntityRepository<T> where T : class
         return Task.CompletedTask;
     }
 
-    /*
-    public async Task Delete(T entity, CancellationToken cancellationToken = default)
+    public Task Delete(T entity, CancellationToken cancellationToken = default)
     {
-        entity.DeletionDate = DateTime.UtcNow;
-        await Update(entity, cancellationToken);
+        _context.Set<T>().Remove(entity);
+        return Task.CompletedTask;
     }
 
-    public async Task Delete(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+    public Task Delete(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
-        foreach (T entity in entities)
-        {
-            entity.DeletionDate = DateTime.UtcNow;
-        }
-
-        await Update(entities, cancellationToken);
+        _context.Set<T>().RemoveRange(entities);
+        return Task.CompletedTask;
     }
-    */
 
     public async Task Delete(Guid entityId, CancellationToken cancellationToken = default)
     {

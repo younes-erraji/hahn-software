@@ -43,6 +43,9 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, Response>
 
         // user.RefreshTokens.RemoveAll(x => x.Active == false && x.CreationDate.AddDays(2) <= DateTimeOffset.Now);
 
+        user.Login();
+
+        await _userRepository.Update(user);
         await _refreshTokenRepository.Create(refreshToken);
         await _refreshTokenRepository.SaveChanges();
 

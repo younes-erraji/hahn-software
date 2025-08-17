@@ -1,9 +1,9 @@
 ﻿using HahnSoftware.Application.RESTful;
+using HahnSoftware.Domain.Interfaces.Repositories;
+using HahnSoftware.Domain.Interfaces.Services;
 using HahnSoftware.Domain.Entities;
 
 using MediatR;
-using HahnSoftware.Domain.Interfaces.Repositories;
-using HahnSoftware.Domain.Interfaces.Services;
 
 namespace HahnSoftware.Application.Comments.Commands.ReplyComment;
 

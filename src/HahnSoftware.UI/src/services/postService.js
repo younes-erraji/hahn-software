@@ -7,6 +7,13 @@ export const getPosts = async (pageSize = 10, pageNumber = 1, search = '') => {
   );
 };
 
+export const getBookmarks = async (pageSize = 10, pageNumber = 1, search = '') => {
+  return api.post('/posts/bookmarks', 
+    { search },
+    { params: { PageSize: pageSize, PageNumber: pageNumber } }
+  );
+};
+
 export const createPost = async (postData) => {
   return api.post('/posts/create', postData);
 };

@@ -9,6 +9,7 @@ import Register from './components/Authentication/Register';
 import PostForm from './components/Blog/PostForm';
 import PrivateRoute from './routers/PrivateRoute';
 import AuthenticationRoute from './routers/AuthenticationRoute';
+import Bookmarks from './pages/Bookmarks';
 // import ForgotPassword from './components/Auth/ForgotPassword';
 // import ResetPassword from './components/Auth/ResetPassword';
 
@@ -33,6 +34,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/bookmarks"
+              element={
+                <PrivateRoute>
+                  <Bookmarks />
                 </PrivateRoute>
               }
             />

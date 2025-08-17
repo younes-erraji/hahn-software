@@ -11,20 +11,26 @@ public class LikeDislikeCommentCommandHandler : IRequestHandler<LikeDislikeComme
 {
     private readonly IUserService _userService;
     private readonly ICommentRepository _commentRepository;
+    private readonly ICommentReactionRepository _commentReactionRepository;
 
-    public LikeDislikeCommentCommandHandler(ICommentRepository commentRepository, IUserService userService)
+    public LikeDislikeCommentCommandHandler(ICommentRepository commentRepository, IUserService userService, ICommentReactionRepository commentReactionRepository)
     {
         _userService = userService;
         _commentRepository = commentRepository;
+        _commentReactionRepository = commentReactionRepository;
     }
 
     public async Task<Response> Handle(LikeDislikeCommentCommand request, CancellationToken cancellationToken)
     {
         Guid userId = _userService.GetUserIdentifier();
-        Comment comment = await _commentRepository.Get(request.CommentId);
-        comment.LikeDislike(userId, request.Type);
-        await _commentRepository.Update(comment);
-        await _commentRepository.SaveChanges();
-        return Response.Success();
+        if (await _commentRepository.Exists(request.CommentId))
+        {
+            CommentReaction reaction = new CommentReaction(request.CommentId, userId, request.Type);
+            await _commentReactionRepository.Create(reaction);
+            await _commentReactionRepository.SaveChanges();
+            return Response.Success();
+        }
+
+        return Response.NotFound();
     }
 }

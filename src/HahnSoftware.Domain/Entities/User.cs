@@ -58,7 +58,7 @@ public sealed class User : Entity
     {
         PasswordResetToken = resetToken;
         PasswordResetTokenExpiry = tokenExpiry;
-        AddDomainEvent(new ForgotPasswordEvent(Id, Mail));
+        AddDomainEvent(new ForgotPasswordEvent(Id, Mail, PasswordResetToken));
     }
 
     public void Login()

@@ -22,13 +22,20 @@ public class BookmarkPostCommandHandler : IRequestHandler<BookmarkPostCommand, R
     public async Task<Response> Handle(BookmarkPostCommand request, CancellationToken cancellationToken)
     {
         Guid userId = _userService.GetUserIdentifier();
-        Post post = await _postRepository.Get(request.Id);
+        if (await _postRepository.Exists(request.Id))
+        {
+            if (await _postBookmarkRepository.Exists(x => x.UserId == userId && x.PostId == request.Id) == false)
+            {
+                PostBookmark postBookmark = new PostBookmark(request.Id, userId);
 
-        PostBookmark postBookmark = new PostBookmark(post.Id, userId);
+                await _postBookmarkRepository.Create(postBookmark);
+                await _postBookmarkRepository.SaveChanges();
+                return Response.Success();
+            }
 
-        await _postBookmarkRepository.Create(postBookmark);
-        await _postBookmarkRepository.SaveChanges();
+            return Response.BadRequest("This post is already bookmarked!");
+        }
 
-        return Response.Success();
+        return Response.NotFound();
     }
 }

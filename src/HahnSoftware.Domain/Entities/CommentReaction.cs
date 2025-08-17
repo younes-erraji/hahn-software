@@ -1,4 +1,5 @@
 ﻿using HahnSoftware.Domain.Entities.Primitives;
+using HahnSoftware.Domain.Events.Comments;
 using HahnSoftware.Domain.Enums;
 
 namespace HahnSoftware.Domain.Entities;
@@ -23,5 +24,6 @@ public sealed class CommentReaction : Entity
         Type = type;
         UserId = userId;
         CommentId = commentId;
+        AddDomainEvent(new CommentReactionCreateEvent(Id, UserId, Type));
     }
 }

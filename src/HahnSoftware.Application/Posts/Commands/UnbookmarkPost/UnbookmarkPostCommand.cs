@@ -6,10 +6,10 @@ namespace HahnSoftware.Application.Posts.Commands.CreatePost;
 
 public class UnbookmarkPostCommand : IRequest<Response>
 {
-    public Guid Id { get; private set; }
+    public Guid PostId { get; private set; }
 
-    public UnbookmarkPostCommand(Guid id)
+    public UnbookmarkPostCommand(Guid postId)
     {
-        Id = id;
+        PostId = postId;
     }
 }

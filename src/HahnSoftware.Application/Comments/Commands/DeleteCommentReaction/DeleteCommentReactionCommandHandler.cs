@@ -5,26 +5,39 @@ using HahnSoftware.Domain.Entities;
 
 using MediatR;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace HahnSoftware.Application.Comments.Commands.DeleteCommentReaction;
 
 public class DeleteCommentReactionCommandHandler : IRequestHandler<DeleteCommentReactionCommand, Response>
 {
     private readonly IUserService _userService;
     private readonly ICommentRepository _commentRepository;
+    private readonly ICommentReactionRepository _commentReactionRepository;
 
-    public DeleteCommentReactionCommandHandler(ICommentRepository commentRepository, IUserService userService)
+    public DeleteCommentReactionCommandHandler(ICommentRepository commentRepository, IUserService userService, ICommentReactionRepository commentReactionRepository)
     {
         _userService = userService;
         _commentRepository = commentRepository;
+        _commentReactionRepository = commentReactionRepository;
     }
 
     public async Task<Response> Handle(DeleteCommentReactionCommand request, CancellationToken cancellationToken)
     {
         Guid userId = _userService.GetUserIdentifier();
-        Comment comment = await _commentRepository.Get(request.CommentId);
-        comment.DeleteReaction(userId);
-        await _commentRepository.Update(comment);
-        await _commentRepository.SaveChanges();
-        return Response.Success();
+        if (await _commentRepository.Exists(request.CommentId))
+        {
+            CommentReaction? reaction = await _commentReactionRepository.Query(x => x.UserId == userId && x.CommentId == request.CommentId).FirstOrDefaultAsync();
+
+            if (reaction is not null)
+            {
+                await _commentReactionRepository.Delete(reaction);
+                await _commentReactionRepository.SaveChanges();
+            }
+
+            return Response.Success();
+        }
+
+        return Response.NotFound();
     }
 }

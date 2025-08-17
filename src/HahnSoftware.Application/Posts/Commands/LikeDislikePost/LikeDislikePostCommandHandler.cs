@@ -11,20 +11,31 @@ public class LikeDislikePostCommandHandler : IRequestHandler<LikeDislikePostComm
 {
     private readonly IUserService _userService;
     private readonly IPostRepository _postRepository;
+    private readonly IPostReactionRepository _postReactionRepository;
 
-    public LikeDislikePostCommandHandler(IPostRepository postRepository, IUserService userService)
+    public LikeDislikePostCommandHandler(IPostRepository postRepository, IUserService userService, IPostReactionRepository postReactionRepository)
     {
         _userService = userService;
         _postRepository = postRepository;
+        _postReactionRepository = postReactionRepository;
     }
 
     public async Task<Response> Handle(LikeDislikePostCommand request, CancellationToken cancellationToken)
     {
         Guid userId = _userService.GetUserIdentifier();
-        Post post = await _postRepository.Get(request.PostId);
-        post.LikeDislike(userId, request.Type);
-        await _postRepository.Update(post);
-        await _postRepository.SaveChanges();
-        return Response.Success();
+        if (await _postRepository.Exists(request.PostId))
+        {
+            if (await _postReactionRepository.Exists(x => x.UserId == userId && x.PostId == request.PostId) == false)
+            {
+                PostReaction reaction = new PostReaction(request.PostId, userId, request.Type);
+                await _postReactionRepository.Create(reaction);
+                await _postReactionRepository.SaveChanges();
+                return Response.Success();
+            }
+
+            return Response.BadRequest("This post is already liked or disliked");
+        }
+
+        return Response.NotFound();
     }
 }

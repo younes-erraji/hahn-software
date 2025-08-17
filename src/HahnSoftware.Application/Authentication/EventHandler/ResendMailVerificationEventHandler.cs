@@ -13,18 +13,16 @@ public class ResendMailVerificationEventHandler : INotificationHandler<ResendMai
 {
     private readonly IMailService _mailService;
     private readonly string _mailVerificationUrl;
-    // private readonly string _resetPasswordUrl;
 
     public ResendMailVerificationEventHandler(IMailService mainService, IConfiguration configuration)
     {
         _mailService = mainService;
         _mailVerificationUrl = configuration.GetConfig("Mail:VerificationUrl");
-        // _resetPasswordUrl = configuration.GetConfig("Mail:ResetPasswordUrl");
     }
 
     public async Task Handle(ResendMailVerificationEvent notification, CancellationToken cancellationToken)
     {
-        string verificationLink = $"{_mailVerificationUrl}?token={notification.VerificationToken}&mail={Uri.EscapeDataString(notification.Mail)}";
+        string verificationLink = $"{_mailVerificationUrl}?token={Uri.EscapeDataString(notification.VerificationToken)}&mail={Uri.EscapeDataString(notification.Mail)}";
 
         await _mailService.SendAsync(
             notification.Mail,
