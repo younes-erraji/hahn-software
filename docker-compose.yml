@@ -14,18 +14,17 @@ services:
       context: .
       dockerfile: src/HahnSoftware.API/Dockerfile
     ports:
-      - "5000:80"
+      - "7276:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=HahnSoftwareDb;User=sa;Password=HahnSoftware@123;
     depends_on:
       - sqlserver
   ui:
     build:
-      context: .
-      dockerfile: src/HahnSoftware.UI/Dockerfile
+      context: ./src/HahnSoftware.UI
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3000:80"
     depends_on:
       - api
 volumes:
