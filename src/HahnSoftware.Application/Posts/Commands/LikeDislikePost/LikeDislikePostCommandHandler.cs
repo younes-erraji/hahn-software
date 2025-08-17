@@ -28,8 +28,8 @@ public class LikeDislikePostCommandHandler : IRequestHandler<LikeDislikePostComm
             if (await _postReactionRepository.Exists(x => x.UserId == userId && x.PostId == request.PostId) == false)
             {
                 PostReaction reaction = new PostReaction(request.PostId, userId, request.Type);
-                await _postReactionRepository.Create(reaction);
-                await _postReactionRepository.SaveChanges();
+                await _postReactionRepository.Create(reaction, cancellationToken);
+                await _postReactionRepository.SaveChanges(cancellationToken);
                 return Response.Success();
             }
 

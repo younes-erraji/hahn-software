@@ -29,7 +29,8 @@ public class ChangePasswordCommandValidator : IRequestHandler<ChangePasswordComm
         Guid userId = _userService.GetUserIdentifier();
         User user = await _userRepository.GetUser(userId);
         string password = _authenticationService.GetPassword(user.Key, request.CurrentPassword);
-        if (Verify(password, user.Password) == false)
+        string passwordHash = HashPassword(password, GenerateSalt());
+        if (Verify(passwordHash, user.Password) == false)
         {
             return Response.BadRequest("Current password is incorrect");
         }

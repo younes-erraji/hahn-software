@@ -39,8 +39,8 @@ public class DeletePostReactionCommandHandler : IRequestHandler<DeletePostReacti
 
             if (reaction is not null)
             {
-                await _postReactionRepository.Delete(reaction);
-                await _postReactionRepository.SaveChanges();
+                await _postReactionRepository.Delete(reaction, cancellationToken);
+                await _postReactionRepository.SaveChanges(cancellationToken);
             }
 
             return Response.Success();

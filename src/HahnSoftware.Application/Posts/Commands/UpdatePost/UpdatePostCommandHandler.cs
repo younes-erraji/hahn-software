@@ -20,8 +20,8 @@ public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, Respo
         Post post = await _postRepository.Get(request.Id);
         post.Update(request.Title, request.Body, request.Tags);
 
-        await _postRepository.Update(post);
-        await _postRepository.SaveChanges();
+        await _postRepository.Update(post, cancellationToken);
+        await _postRepository.SaveChanges(cancellationToken);
 
         return Response.Success();
     }

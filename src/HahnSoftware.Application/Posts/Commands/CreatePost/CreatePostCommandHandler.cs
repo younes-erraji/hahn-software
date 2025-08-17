@@ -23,8 +23,8 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, Respo
         Guid userId = _userService.GetUserIdentifier();
         Post post = new (request.Title, request.Body, request.Tags, userId);
 
-        await _postRepository.Create(post);
-        await _postRepository.SaveChanges();
+        await _postRepository.Create(post, cancellationToken);
+        await _postRepository.SaveChanges(cancellationToken);
 
         return Response.Success();
     }

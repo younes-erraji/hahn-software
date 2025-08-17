@@ -30,8 +30,8 @@ public class UnbookmarkPostCommandHandler : IRequestHandler<UnbookmarkPostComman
 
             if (bookmark is not null)
             {
-                await _postBookmarkRepository.Delete(bookmark);
-                await _postBookmarkRepository.SaveChanges();
+                await _postBookmarkRepository.Delete(bookmark, cancellationToken);
+                await _postBookmarkRepository.SaveChanges(cancellationToken);
             }
 
             return Response.Success();

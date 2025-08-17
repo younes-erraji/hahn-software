@@ -15,8 +15,10 @@ services:
       dockerfile: src/HahnSoftware.API/Dockerfile
     ports:
       - "7276:80"
+      - "5156:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
     depends_on:
       - sqlserver
   ui:

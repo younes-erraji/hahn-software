@@ -28,8 +28,8 @@ public class BookmarkPostCommandHandler : IRequestHandler<BookmarkPostCommand, R
             {
                 PostBookmark postBookmark = new PostBookmark(request.Id, userId);
 
-                await _postBookmarkRepository.Create(postBookmark);
-                await _postBookmarkRepository.SaveChanges();
+                await _postBookmarkRepository.Create(postBookmark, cancellationToken);
+                await _postBookmarkRepository.SaveChanges(cancellationToken);
                 return Response.Success();
             }
 

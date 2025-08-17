@@ -19,8 +19,8 @@ public class DeletePostCommandHandler : IRequestHandler<DeletePostCommand, Respo
     {
         Post post = await _postRepository.Get(request.Id);
         post.Delete();
-        await _postRepository.Update(post);
-        await _postRepository.SaveChanges();
+        await _postRepository.Update(post, cancellationToken);
+        await _postRepository.SaveChanges(cancellationToken);
         return Response.Success();
     }
 }
